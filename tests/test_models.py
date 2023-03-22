@@ -83,3 +83,17 @@ def test_patient_normalise(test, expected):
     """Test normalisation works for arrays of one and positive integers."""
     from inflammation.models import patient_normalise
     npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
+
+
+@pytest.mark.parametrize(
+    "test, expected",
+    [
+        ([ [0, 0, 0], [0, 0, 0], [0, 0, 0] ], [0, 0, 0]),
+        ([ [4, 2, 5], [1, 6, 2], [4, 1, 9] ], [1.4142136, 2.1602469, 2.8674418]),
+        ([ [4, -2, 5], [1, -6, 2], [-4, -1, 9] ], [3.2998316, 2.1602469, 2.8674418]),
+    ])
+
+def test_std(test, expected):
+    """Test std_dev with positive and negative integers"""
+    from inflammation.models import daily_std
+    npt.assert_almost_equal(daily_std(np.array(test)), np.array(expected))
